@@ -26,7 +26,7 @@ pipeline{
 		steps{
       // Get maven home path
         
-     sh " sudo ${mvnHome} -Dmaven.test.failure.ignore clean package"
+     sh " sudo ${mvnHome} -Dmaven.test.failure.ignore  package"
 		}
       }
 	  
