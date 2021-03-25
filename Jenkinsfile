@@ -5,9 +5,7 @@ pipeline{
 	
 	environment{
 	 mvnHome= tool('M3')
-	def tomcatWeb = 'http://3.141.164.2:8085///opt//tomcat//webapps'
-	def tomcatBin = 'http://3.141.164.2:8085//opt//tomcat//bin'
-	def tomcatStatus = ''
+	
 	}
 	
 
@@ -34,33 +32,7 @@ pipeline{
      // }
 	  
 	 
-  	   stage ('Stop Tomcat Server') {
-		steps{
-		  sh  "${tomcatBin}\\shutdown.sh"
-                  sleep(time:10,unit:"SECONDS")
-      //         bat ''' @ECHO OFF
-          //     wmic process list brief | find /i "tomcat" > NUL
-       //        IF ERRORLEVEL 1 (
-           //         echo  Stopped
-         //      ) ELSE (
-       //        echo running
-                 
-          //     )
-//'''
-				}
-  	 }
-  	  stage('Deploy to Production'){
-   
-	    steps{
-               sh "cp target\\hello-0.0.1-SNAPSHOT.jar \"${tomcatWeb}\\hello-0.0.1-SNAPSHOT.war\""
-	}
-      }
-     stage ('Start Tomcat Server') {
-	  steps{
-      //   sleep(time:5,unit:"SECONDS") 
-         sh "${tomcatBin}\\startup.sh"
-         sleep(time:100,unit:"SECONDS")
-		 }
+  	
   }
 	
 	
