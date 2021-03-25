@@ -5,9 +5,9 @@ pipeline{
 	
 	environment{
 	 mvnHome= tool('M3')
-	// def tomcatWeb = 'http://3.141.164.2:8085///opt//tomcat//webapps'
-	// def tomcatBin = 'http://3.141.164.2:8085//opt//tomcat//bin'
-	// def tomcatStatus = ''
+	def tomcatWeb = 'http://3.141.164.2:8085///opt//tomcat//webapps'
+	def tomcatBin = 'http://3.141.164.2:8085//opt//tomcat//bin'
+	def tomcatStatus = ''
 	}
 	
 
@@ -34,33 +34,34 @@ pipeline{
      // }
 	  
 	 
-  // stage ('Stop Tomcat Server') {
-	//	steps{
+  	   stage ('Stop Tomcat Server') {
+		steps{
+		  sh  "${tomcatBin}\\shutdown.sh"
+                  sleep(time:10,unit:"SECONDS")
       //         bat ''' @ECHO OFF
           //     wmic process list brief | find /i "tomcat" > NUL
        //        IF ERRORLEVEL 1 (
            //         echo  Stopped
          //      ) ELSE (
        //        echo running
-          //        "${tomcatBin}\\shutdown.bat"
-        //          sleep(time:10,unit:"SECONDS") 
+                 
           //     )
 //'''
-				//}
-   // }
-  // stage('Deploy to Production'){
+				}
+  	 }
+  	  stage('Deploy to Production'){
    
-		//steps{
-   //  bat "copy target\\nvnshoppingcart.war \"${tomcatWeb}\\nvnshoppingcart.war\""
-	// }
- //  }
-     // stage ('Start Tomcat Server') {
-	 // steps{
+	    steps{
+               sh "cp target\\hello-0.0.1-SNAPSHOT.jar \"${tomcatWeb}\\hello-0.0.1-SNAPSHOT.war\""
+	}
+      }
+     stage ('Start Tomcat Server') {
+	  steps{
       //   sleep(time:5,unit:"SECONDS") 
-      //   bat "${tomcatBin}\\startup.bat"
-     //    sleep(time:100,unit:"SECONDS")
-		// }
-  // }
+         sh "${tomcatBin}\\startup.sh"
+         sleep(time:100,unit:"SECONDS")
+		 }
+  }
 	
 	
 	
